@@ -1,0 +1,88 @@
+# ============================================================
+#  PSOonTSP — Git 忽略规则
+# ============================================================
+
+# ---------- Python 字节码缓存 ----------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ---------- 构建 / 打包产物 ----------
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+MANIFEST
+
+# ---------- 虚拟环境 ----------
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+# pyenv: 如果是库/包, 建议忽略; 只在本机固定解释器版本时可保留并提交
+# .python-version
+
+# ---------- 测试 / 类型检查 / 代码质量缓存 ----------
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+.hypothesis/
+.pyre/
+.pytype/
+cython_debug/
+
+# ---------- Jupyter ----------
+.ipynb_checkpoints/
+
+# ---------- 文档构建 ----------
+docs/_build/
+site/
+
+# ---------- IDE ----------
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# VS Code —— 忽略个人化配置, 但保留可共享的设置文件
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+!.vscode/*.code-workspace
+
+# ---------- 操作系统 ----------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ---------- 运行输出 (按需启用) ----------
+# PSO / TSP 的实验输出, 若需要纳入版本管理请保持注释
+# results/
+# output/
+# logs/
+# *.log
