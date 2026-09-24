@@ -9,11 +9,13 @@ class Particle:
                  vel:np.ndarray,
                  f_target:Callable[[np.ndarray], float],
                  max_vel:float):
-        self.pos = pos
+        self.pos = pos      
         self.vel = vel
         self.p_best = None
         self.f_target = f_target
         self.max_vel = max_vel
+        self.fitness_pos = None
+        self.fitness_p_best = None
 
     def target_func(self, pos:np.ndarray)->float:
         return self.f_target(pos)
@@ -31,6 +33,7 @@ class Particle:
         """
         if self.p_best is None:
             self.p_best = np.copy(self.pos)
+            self.fitness_p_best = self.target_func(self.p_best)
 
         #速度更新
         self.vel = self.vel * omega + c1*r1*(self.p_best - self.pos)+c2*r2*(g_best - self.pos)
@@ -38,10 +41,11 @@ class Particle:
             self.vel = self.vel / np.linalg.norm(self.vel) * self.max_vel   
         
         #位置更新
-        self.pos = self.pos + self.vel
-        
-        if self.target_func(self.pos) > self.target_func(self.p_best):
+        self.pos = self.pos + self.vel  
+        self.fitness_pos = self.target_func(self.pos)
+        if self.fitness_pos > self.fitness_p_best:
             self.p_best = np.copy(self.pos)
+            self.fitness_p_best = self.target_func(self.p_best)
 
 
 class MyPSO:
@@ -70,6 +74,7 @@ class MyPSO:
         self.max_vel = max_vel      #最大速度限制
         self.g_best = None      #所有粒子搜索历史的最优情况
         self.n_iter = 1         #迭代次数，从第一次开始
+        self.fitness_g_best = None  #全局最优适应度，由g_best计算得到
 
 
     def init_population(self):
@@ -90,8 +95,10 @@ class MyPSO:
             #初始化全局最佳pos
             if self.g_best is None:
                 self.g_best = particle.pos.copy()
+                self.fitness_g_best = self.f_target(particle.pos)
             elif self.f_target(self.g_best) < self.f_target(particle.pos):
                 self.g_best = particle.pos.copy()
+                self.fitness_g_best = self.f_target(particle.pos)
             self.population.append(particle)
 
     def update_omega(self):
@@ -125,9 +132,13 @@ class MyPSO:
                                       r2=self.r2[i])
         self.update_omega()
         #更新g_best
+        if self.g_best is None:
+            self.g_best = self.population[0].pos.copy()
+            self.fitness_g_best = self.population[0].fitness_pos
         for particle in self.population:
-            if self.f_target(particle.p_best) > self.f_target(self.g_best):
+            if particle.fitness_p_best > self.fitness_g_best:
                 self.g_best = particle.p_best.copy()
+                self.fitness_g_best = particle.fitness_p_best
         #更新迭代次数
         self.n_iter += 1
 
