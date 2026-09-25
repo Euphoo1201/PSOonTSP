@@ -5,6 +5,9 @@ from . import utils
 
 
 class Particle:
+    """
+    单个粒子
+    """
     def __init__(self,pos:np.ndarray,
                  vel:np.ndarray,
                  f_target:Callable[[np.ndarray], float],
@@ -49,6 +52,9 @@ class Particle:
 
 
 class MyPSO:
+    """
+    粒子群算法核心
+    """
     def __init__(self,
                  n_max_iterations:int,
                  n_particles:int,

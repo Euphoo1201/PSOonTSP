@@ -26,9 +26,10 @@ test_case_map = np.array([
 
 
 if __name__ == "__main__":
-    tsp = TSP(START_IDX, N_CITIES)
+    #问题构建
+    tsp = TSP(START_IDX, N_CITIES)  
     tsp.build_map(test_case_map, False)
-
+    #问题解决
     tsp_manager = TSPManager(tsp, PUNISH_RATE)
     fitness_func = tsp_manager.get_target_func()
     pso_inst = MyPSO(

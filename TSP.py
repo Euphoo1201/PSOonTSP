@@ -3,8 +3,10 @@ import numpy as np
 import MyPSO
 
 
-#管理TSP问题构建所需的所有数据结构
 class City:
+    """
+    城市类
+    """
     def __init__(self,idx:int,adj_dists:dict[int, float] | None = None):
         self.idx = idx
         if adj_dists is not None:
@@ -16,6 +18,9 @@ class City:
         self.adj_dists[idx] = weight
 
 class TSP:
+    """
+    管理TSP问题构建所需的所有数据结构
+    """
     def __init__(self,start_idx:int, n_cities:int):
         self.start_idx = start_idx      #触发城市的索引
         self.n_cities = n_cities        #城市个数
@@ -50,8 +55,10 @@ class TSP:
         self.max_tour_bound = float(np.sort(w)[-self.n_cities:].sum())   # S：前 n 大边权之和
 
 
-#将TSP问题建模成可以供PSO处理的形式
 class TSPManager:
+    """
+    将TSP问题建模成可以供PSO处理的形式
+    """
     def __init__(self,tsp_inst:TSP,punish_rate:float = 2.0):
         if tsp_inst.b_has_built is False:
             raise ValueError("TSP实例尚未构建地图，请先调用build_map方法")

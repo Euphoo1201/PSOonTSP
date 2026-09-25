@@ -68,7 +68,7 @@ out/
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 !.vscode/*.code-workspace
-
+.vscode/
 # ---------- 操作系统 ----------
 .DS_Store
 .AppleDouble
